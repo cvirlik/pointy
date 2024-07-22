@@ -1,9 +1,9 @@
-import FontAwesome from '@expo/vector-icons/FontAwesome';
-import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
-import { useFonts } from 'expo-font';
-import { Stack } from 'expo-router';
-import * as SplashScreen from 'expo-splash-screen';
 import { useEffect } from 'react';
+import * as SplashScreen from 'expo-splash-screen';
+import { Stack } from 'expo-router';
+import { useFonts } from 'expo-font';
+import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
+import FontAwesome from '@expo/vector-icons/FontAwesome';
 import 'react-native-reanimated';
 
 import { useColorScheme } from '@/components/useColorScheme';
@@ -19,11 +19,16 @@ export const unstable_settings = {
 };
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
-SplashScreen.preventAutoHideAsync();
+void SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
   const [loaded, error] = useFonts({
     SpaceMono: require('../assets/fonts/SpaceMono-Regular.ttf'),
+    Regular: require('../assets/fonts/static/AnekBangla-Regular.ttf'),
+    Light: require('../assets/fonts/static/AnekBangla-Light.ttf'),
+    Medium: require('../assets/fonts/static/AnekBangla-Medium.ttf'),
+    Bold: require('../assets/fonts/static/AnekBangla-Bold.ttf'),
+    SemiBold: require('../assets/fonts/static/AnekBangla-SemiBold.ttf'),
     ...FontAwesome.font,
   });
 
@@ -34,7 +39,7 @@ export default function RootLayout() {
 
   useEffect(() => {
     if (loaded) {
-      SplashScreen.hideAsync();
+      void SplashScreen.hideAsync();
     }
   }, [loaded]);
 

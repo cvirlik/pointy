@@ -1,31 +1,49 @@
-import { StyleSheet } from 'react-native';
+import { Pressable, StyleSheet, View } from 'react-native';
+import * as Haptics from 'expo-haptics';
+import { Entypo } from '@expo/vector-icons';
 
-import EditScreenInfo from '@/components/EditScreenInfo';
-import { Text, View } from '@/components/Themed';
+import { TransactionCard } from '@/components/TransactionCard';
+import { PageContainer } from '@/components/PageContainer';
+import { BalanceCard } from '@/components/BalanceCard';
 
-export default function TabOneScreen() {
+export default function Tab() {
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Tab One</Text>
-      <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
-      <EditScreenInfo path="app/(tabs)/index.tsx" />
-    </View>
+    <>
+      <PageContainer>
+        <BalanceCard />
+        <TransactionCard />
+        <TransactionCard />
+        <TransactionCard />
+        <TransactionCard />
+        <TransactionCard />
+      </PageContainer>
+      <View style={{ position: 'relative' }}>
+        <Pressable
+          style={({ pressed }) => [
+            styles.button,
+            pressed ? styles.buttonPressed : styles.buttonDefault,
+          ]}
+          onPress={() => Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Soft)}
+        >
+          <Entypo name="plus" size={24} color="black" />
+        </Pressable>
+      </View>
+    </>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
+  button: {
+    position: 'absolute',
+    bottom: 16,
+    right: 16,
+    borderRadius: 100,
+    padding: 16,
   },
-  title: {
-    fontSize: 20,
-    fontWeight: 'bold',
+  buttonDefault: {
+    backgroundColor: '#FFC9E0',
   },
-  separator: {
-    marginVertical: 30,
-    height: 1,
-    width: '80%',
+  buttonPressed: {
+    backgroundColor: '#ea92b9',
   },
 });
