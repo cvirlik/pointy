@@ -5,7 +5,10 @@
     "paths": {
       "@/*": [
         "./*"
-      ]
+      ],
+    "baseUrl": ".", 
+    "types": ["node", "randomcolor"],
+    "typeRoots": ["node_modules/@types"]
     }
   },
   "include": [

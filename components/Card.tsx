@@ -18,5 +18,7 @@ const styles = StyleSheet.create({
     width: '100%',
     borderRadius: 16,
     justifyContent: 'center',
+    shadowColor: 'rgba(54,47,59,0.6)',
+    elevation: 11,
   },
 });

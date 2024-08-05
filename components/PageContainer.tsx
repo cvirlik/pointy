@@ -16,12 +16,24 @@ export function PageContainer(props: PageProps) {
 }
 
 const styles = StyleSheet.create({
+  //   container: {
+  //     backgroundColor: 'white',
+  //     paddingHorizontal: 16,
+  //     paddingBottom: 81,
+  //     alignItems: 'center',
+  //     gap: 32,
+  //   },
   container: {
     flex: 1,
     backgroundColor: 'white',
   },
   scrollContainer: {
+    flex: 1,
+    backgroundColor: 'white',
+  },
+  scrollContainer: {
     paddingHorizontal: 16,
+    paddingBottom: 81,
     paddingBottom: 81,
     alignItems: 'center',
     gap: 32,

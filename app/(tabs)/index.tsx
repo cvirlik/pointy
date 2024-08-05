@@ -2,7 +2,8 @@ import { Pressable, StyleSheet, View } from 'react-native';
 import * as Haptics from 'expo-haptics';
 import { Entypo } from '@expo/vector-icons';
 
-import { TransactionCard } from '@/components/TransactionCard';
+import { TransactionList } from '@/components/TransactionList';
+import { PageHeader } from '@/components/PageHeader';
 import { PageContainer } from '@/components/PageContainer';
 import { BalanceCard } from '@/components/BalanceCard';
 
@@ -10,12 +11,9 @@ export default function Tab() {
   return (
     <>
       <PageContainer>
+        <PageHeader title="Hello there!" avatar={true} />
         <BalanceCard />
-        <TransactionCard />
-        <TransactionCard />
-        <TransactionCard />
-        <TransactionCard />
-        <TransactionCard />
+        <TransactionList></TransactionList>
       </PageContainer>
       <View style={{ position: 'relative' }}>
         <Pressable
@@ -35,7 +33,7 @@ export default function Tab() {
 const styles = StyleSheet.create({
   button: {
     position: 'absolute',
-    bottom: 16,
+    bottom: 81,
     right: 16,
     borderRadius: 100,
     padding: 16,
