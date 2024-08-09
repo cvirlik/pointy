@@ -1,6 +1,7 @@
 import { StyleSheet, View } from 'react-native';
 
 import { TransactionCard } from './TransactionCard';
+import { Text } from './Themed';
 
 const testList = [
   {
@@ -44,6 +45,7 @@ const testList = [
 export function TransactionList() {
   return (
     <View style={styles.container}>
+      <Text style={styles.text}>Transaction History</Text>
       {testList.map((item, index) => (
         <TransactionCard
           key={index}
@@ -58,6 +60,10 @@ export function TransactionList() {
 }
 
 const styles = StyleSheet.create({
+  text: {
+    fontFamily: 'SemiBold',
+    fontSize: 24,
+  },
   container: {
     width: '100%',
     gap: 8,

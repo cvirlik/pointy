@@ -18,12 +18,12 @@ export function Lava() {
   const { width, height } = useWindowDimensions();
 
   const circles = useMemo(() => {
-    const rand = randomNumber(5, 12) / 10;
+    const rand = randomNumber(4, 6) / 10;
     const radius = (width * rand) / 2;
-    return Array.from({ length: 6 }, (_, index) => ({
+    return Array.from({ length: 10 }, (_, index) => ({
       index,
-      x: Math.random() * (width - radius * 2),
-      y: Math.random() * (height - radius * 2),
+      x: randomNumber(0, width),
+      y: randomNumber(0, height),
       radius,
       color: '#72B8EB',
     }));
@@ -63,7 +63,7 @@ const Circle: React.FC<CircleProps> = ({ color, radius, x, y }) => {
     return withRepeat(
       withSequence(
         withTiming(randRotation, { duration: 0 }),
-        withTiming(randRotation + 360, { duration: 10000, easing: Easing.linear }),
+        withTiming(randRotation + 360, { duration: 10_000, easing: Easing.linear }),
       ),
       -1,
       false,
@@ -86,7 +86,7 @@ const Circle: React.FC<CircleProps> = ({ color, radius, x, y }) => {
         StyleSheet.absoluteFillObject,
         styles,
         {
-          transformOrigin: ['50%', y, 0],
+          transformOrigin: ['50%', y + radius, 0],
         },
       ]}
     >
