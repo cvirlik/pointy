@@ -1,24 +1,16 @@
-import { StyleSheet } from 'react-native';
-
-import { View } from '@/components/Themed';
+import { SegmentedButton } from '@/components/SegmentedButton';
+import { PageHeader } from '@/components/PageHeader';
+import { PageContainer } from '@/components/PageContainer';
+import { OverviewButton } from '@/components/Overview';
+import { WeekGraph } from '@/components/Charts';
 
 export default function Tab() {
-  return <View style={styles.container}></View>;
+  return (
+    <PageContainer>
+      <PageHeader title="Stats Analytics " avatar={false} />
+      <SegmentedButton options={['Week', 'Month', 'Year']} onSelect={() => {}} />
+      <WeekGraph />
+      <OverviewButton />
+    </PageContainer>
+  );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  title: {
-    fontSize: 20,
-    fontWeight: 'bold',
-  },
-  separator: {
-    marginVertical: 30,
-    height: 1,
-    width: '80%',
-  },
-});

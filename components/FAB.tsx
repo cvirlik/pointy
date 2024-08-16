@@ -1,7 +1,7 @@
+import { Circle, Defs, RadialGradient, Stop, Svg } from 'react-native-svg';
 import { Pressable, StyleSheet, View } from 'react-native';
 import * as Haptics from 'expo-haptics';
 import { Entypo } from '@expo/vector-icons';
-import { Circle, Defs, RadialGradient, Stop, Svg } from 'react-native-svg';
 
 export function FAB() {
   return (
@@ -12,14 +12,19 @@ export function FAB() {
       >
         {({ pressed }) => (
           <View>
-            <Svg width={64} height={64}>
+            <Svg width={(pressed ? 128 : 64) + 18} height={(pressed ? 128 : 64) + 18}>
               <Defs>
                 <RadialGradient id="grad" cx="50%" cy="50%" r="50%" fx="50%" fy="50%">
-                  <Stop offset="60%" stopColor="#FFC9E0" />
-                  <Stop offset="100%" stopColor="#f6bad5" stopOpacity={pressed ? '0.7' : '0'} />
+                  <Stop offset="50%" stopColor="#FFC9E0" />
+                  <Stop offset="100%" stopColor="#f6bad5" stopOpacity="0" />
                 </RadialGradient>
               </Defs>
-              <Circle cx="32" cy="32" r="32" fill="url(#grad)" />
+              <Circle
+                cx={(pressed ? 96 : 32) + 4}
+                cy={(pressed ? 96 : 32) + 4}
+                r={pressed ? '42' : '36'}
+                fill="url(#grad)"
+              />
             </Svg>
             <Entypo name="plus" size={24} color="black" style={styles.icon} />
           </View>
@@ -32,12 +37,12 @@ export function FAB() {
 const styles = StyleSheet.create({
   button: {
     position: 'absolute',
-    bottom: 81,
-    right: 16,
+    bottom: 64,
+    right: 0,
   },
   icon: {
     position: 'absolute',
-    top: 20,
-    left: 20,
+    bottom: 33,
+    right: 33,
   },
 });

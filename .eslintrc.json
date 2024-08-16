@@ -68,7 +68,11 @@
       "filenames/match-regex": "off",
       "eslint-comments/no-use": "off",
       "eslint-comments/no-restricted-disable": "off",
-      "no-restricted-imports": "off",
+      "no-restricted-imports": ["error", { "paths": [{
+        "name": "react-native",
+        "importNames": ["View"],
+        "message": "Please import 'View' from '@/components/Themed' instead."
+    }]}],
       "no-shadow": "off",
       "camelcase": "off",
       "no-restricted-globals": [

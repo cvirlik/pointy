@@ -12,7 +12,7 @@ export function PageHeader(props: PageHeaderProps) {
   return (
     <View style={styles.container}>
       <Text style={styles.text}>{props.title}</Text>
-      {props.avatar ? <Avatar /> : null}
+      {props.avatar ? <Avatar size={42} /> : null}
     </View>
   );
 }

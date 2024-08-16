@@ -1,13 +1,15 @@
 import { StyleSheet, View } from 'react-native';
 
-export function Avatar() {
-  return <View style={styles.image} />;
+type AvatarProps = {
+  size: number;
+};
+
+export function Avatar(props: AvatarProps) {
+  return <View style={[styles.image, { width: props.size, height: props.size }]} />;
 }
 
 const styles = StyleSheet.create({
   image: {
-    width: 42,
-    height: 42,
     backgroundColor: '#415EA7',
     borderRadius: 100,
   },

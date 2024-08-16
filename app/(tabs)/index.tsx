@@ -1,8 +1,8 @@
 import { TransactionList } from '@/components/TransactionList';
 import { PageHeader } from '@/components/PageHeader';
 import { PageContainer } from '@/components/PageContainer';
-import { BalanceCard } from '@/components/BalanceCard';
 import { FAB } from '@/components/FAB';
+import { BalanceCard } from '@/components/BalanceCard';
 
 export default function Tab() {
   return (

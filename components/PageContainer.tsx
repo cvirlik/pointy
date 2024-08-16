@@ -1,15 +1,10 @@
 import { ScrollView, StyleSheet, View } from 'react-native';
 
-import { Lava } from './Lava';
+import type { ViewProps } from './Themed';
 
-type PageProps = React.ComponentProps<typeof View> & {
-  children?: React.ReactNode;
-};
-
-export function PageContainer(props: PageProps) {
+export function PageContainer(props: ViewProps) {
   return (
     <View style={styles.container}>
-      <Lava />
       <ScrollView contentContainerStyle={styles.scrollContainer}>{props.children}</ScrollView>
     </View>
   );
@@ -18,7 +13,7 @@ export function PageContainer(props: PageProps) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: 'white',
+    padding: 0,
   },
   scrollContainer: {
     paddingHorizontal: 16,
