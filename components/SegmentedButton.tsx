@@ -5,12 +5,17 @@ import React from 'react';
 interface SegmentedButtonProps {
   options: string[];
   onSelect?: (selectedOption: string) => void;
+  pagePadding: number;
 }
 
-export const SegmentedButton: React.FC<SegmentedButtonProps> = ({ options, onSelect }) => {
+export const SegmentedButton: React.FC<SegmentedButtonProps> = ({
+  options,
+  onSelect,
+  pagePadding,
+}) => {
   const [selectedIndex, setSelectedIndex] = React.useState(0);
   const { width: windowWidth } = useWindowDimensions();
-  const buttonWidth = (windowWidth - 16 * 2) / 3;
+  const buttonWidth = (windowWidth - pagePadding) / options.length;
 
   const handlePress = (index: number) => {
     setSelectedIndex(index);

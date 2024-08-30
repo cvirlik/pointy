@@ -1,15 +1,15 @@
 import { Circle, Defs, RadialGradient, Stop, Svg } from 'react-native-svg';
 import { Pressable, StyleSheet, View } from 'react-native';
-import * as Haptics from 'expo-haptics';
 import { Entypo } from '@expo/vector-icons';
 
-export function FAB() {
+type FABProps = {
+  onPress: () => void;
+};
+
+export function FAB(props: FABProps) {
   return (
     <View style={{ position: 'relative' }}>
-      <Pressable
-        style={styles.button}
-        onPress={() => Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Soft)}
-      >
+      <Pressable style={styles.button} onPress={props.onPress}>
         {({ pressed }) => (
           <View>
             <Svg width={(pressed ? 128 : 64) + 18} height={(pressed ? 128 : 64) + 18}>

@@ -1,12 +1,27 @@
-import { Defs, RadialGradient, Rect, Stop, Svg } from 'react-native-svg';
-import { Avatar } from '@/components/Avatar';
-import { PageContainer } from '@/components/PageContainer';
-import { Text } from '@/components/Themed';
-import { Pressable, StatusBar, StyleSheet, View } from 'react-native';
+import { Dimensions, Pressable, StatusBar, StyleSheet, View } from 'react-native';
+import React from 'react';
+import { Image } from 'expo-image';
 import * as Haptics from 'expo-haptics';
 import { Ionicons } from '@expo/vector-icons';
 
+import { Text } from '@/components/Themed';
+import { Switch } from '@/components/Switch';
+import { PageContainer } from '@/components/PageContainer';
+import { Avatar } from '@/components/Avatar';
+import { OutlineButton } from '@/components/OutlineButton';
+
 export default function Tab() {
+  const [selectedIndex, setSelectedIndex] = React.useState(0);
+  const width = (Dimensions.get('window').width - 16 * 2 - 16 * 2) / 3;
+  const themes = [
+    require('../../assets/images/Light.svg'),
+    require('../../assets/images/Dark.svg'),
+    require('../../assets/images/Monochrome.svg'),
+  ];
+  const handlePress = (index: number) => {
+    setSelectedIndex(index);
+    void Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Soft);
+  };
   return (
     <PageContainer>
       <View style={styles.container}>
@@ -17,40 +32,70 @@ export default function Tab() {
             style={styles.button}
             onPress={() => Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Soft)}
           >
-            {({ pressed }) => <Text style={styles.text}>Account Info</Text>}
+            {() => <Text style={styles.text}>Account Info</Text>}
           </Pressable>
         </View>
-        <View style={styles.goal}>
+        <View style={styles.rowText}>
           <Text style={styles.goalText}>Current Goal:</Text>
           <Text style={styles.secondaryText}>Flip Flop phone for ✦ 1500</Text>
         </View>
       </View>
-      <View style={{ height: '100%', marginTop: 192 }}>
-        <Pressable onPress={() => Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Soft)}>
-          {({ pressed }) => (
-            <View>
-              <Svg style={StyleSheet.absoluteFillObject}>
-                <Defs>
-                  <RadialGradient id="grad" fx="100" fy="75" gradientUnits="userSpaceOnUse">
-                    <Stop offset="0.3" stopColor="#D92871" stopOpacity={pressed ? '0.2' : '0'} />
-                    <Stop offset="1" stopColor="#ffffff" stopOpacity="0" />
-                  </RadialGradient>
-                </Defs>
-                <Rect width="100%" height="100%" fill="url(#grad)" rx={32} />
-              </Svg>
-              <View style={styles.logOutButton}>
-                <Text style={styles.logOutText}>Log Out</Text>
-                <Ionicons name="log-out-outline" size={24} color="#D92871" />
-              </View>
-            </View>
-          )}
-        </Pressable>
+      <View style={styles.containerThemes}>
+        <Text style={styles.textLabel}>Style Settings</Text>
+        <View style={styles.imageContainer}>
+          {themes.map((theme, index) => (
+            <Pressable
+              key={index}
+              style={[
+                {
+                  width,
+                  borderRadius: 6,
+                  elevation: 5,
+                  shadowColor: 'rgba(20, 19, 21, 0.6)',
+                  justifyContent: 'center',
+                  alignContent: 'center',
+                  position: 'relative',
+                },
+              ]}
+              onPress={() => handlePress(index)}
+            >
+              <Image style={styles.image} source={theme} />
+              {index === selectedIndex && (
+                <Ionicons
+                  name="checkmark-circle"
+                  size={24}
+                  color={'#72B8EB'}
+                  style={{ position: 'absolute', right: 4, bottom: 4 }}
+                />
+              )}
+            </Pressable>
+          ))}
+        </View>
+        <View style={styles.rowText}>
+          <Text style={styles.goalText}>Enable vibrations</Text>
+          <Switch isSelect={true} onSelect={() => {}}></Switch>
+        </View>
       </View>
+      <OutlineButton
+        text="Log Out"
+        color="#D92871"
+        colorFill="rgba(217, 40, 114, 0.1)"
+        icon={<Ionicons name="log-out-outline" size={24} color="#D92871" />}
+      />
     </PageContainer>
   );
 }
 
 const styles = StyleSheet.create({
+  image: {
+    aspectRatio: '470 / 275',
+  },
+  imageContainer: {
+    width: '100%',
+    flexDirection: 'row',
+    gap: 16,
+    overflow: 'visible',
+  },
   container: {
     width: '100%',
     backgroundColor: 'transparent',
@@ -74,9 +119,10 @@ const styles = StyleSheet.create({
     paddingVertical: 2,
     borderRadius: 16,
   },
-  goal: {
+  rowText: {
     marginTop: 8,
     flexDirection: 'row',
+    alignItems: 'center',
     justifyContent: 'space-between',
     width: '100%',
   },
@@ -89,20 +135,12 @@ const styles = StyleSheet.create({
     fontFamily: 'Regular',
     fontSize: 18,
   },
-  logOutButton: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
-    borderWidth: 1,
-    paddingHorizontal: 38,
-    paddingVertical: 2,
-    borderRadius: 16,
-    borderColor: '#D92871',
+  textLabel: {
+    fontFamily: 'SemiBold',
+    fontSize: 24,
   },
-  logOutText: {
-    color: '#D92871',
-    fontFamily: 'Regular',
-    fontSize: 18,
-    textAlign: 'center',
+  containerThemes: {
+    width: '100%',
+    gap: 8,
   },
 });

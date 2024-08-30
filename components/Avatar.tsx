@@ -11,6 +11,6 @@ export function Avatar(props: AvatarProps) {
 const styles = StyleSheet.create({
   image: {
     backgroundColor: '#415EA7',
-    borderRadius: 100,
+    borderRadius: 1000,
   },
 });
