@@ -94,6 +94,7 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 16,
     fontFamily: 'Medium',
+    lineHeight: 32,
   },
   selectedText: {
     color: '#ffffff',

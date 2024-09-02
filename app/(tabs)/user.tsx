@@ -28,12 +28,13 @@ export default function Tab() {
         <Avatar size={210} />
         <View>
           <Text style={styles.name}>Pupus Pupus</Text>
-          <Pressable
-            style={styles.button}
-            onPress={() => Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Soft)}
-          >
-            {() => <Text style={styles.text}>Account Info</Text>}
-          </Pressable>
+          <OutlineButton
+            text="Account Info"
+            color="white"
+            colorFill="black"
+            withoutOutline
+            filled
+          />
         </View>
         <View style={styles.rowText}>
           <Text style={styles.goalText}>Current Goal:</Text>

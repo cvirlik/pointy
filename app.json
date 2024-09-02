@@ -8,18 +8,23 @@
     "scheme": "myapp",
     "userInterfaceStyle": "automatic",
     "splash": {
-      "image": "./assets/images/splash.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
+      "resizeMode": "cover",
+      "image": "./assets/images/splash-light.png",
+      "dark": {
+        "resizeMode": "cover",
+        "image": "./assets/images/splash-dark.png"
+      }
     },
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "com.cvirlik.pointy"
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.cvirlik.pointy"
     },
     "web": {
       "bundler": "metro",
@@ -27,13 +32,31 @@
       "favicon": "./assets/images/favicon.png"
     },
     "plugins": [
+      [
+        "expo-build-properties",
+        {
+          "android": {
+            "compileSdkVersion": 34,
+            "targetSdkVersion": 34,
+            "buildToolsVersion": "34.0.0"
+          },
+          "ios": {
+            "deploymentTarget": "13.4"
+          }
+        }
+      ],
       "expo-router"
     ],
     "experiments": {
       "typedRoutes": true
     },
-    "assets": [
-      "./assets/fonts/"
-    ]
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "0382829e-561f-4883-8da0-5ec640ca9643"
+      }
+    }
   }
 }

@@ -73,6 +73,7 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 18,
     fontFamily: 'Medium',
+    lineHeight: 32,
   },
   selectedText: {
     color: 'white',

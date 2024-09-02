@@ -37,7 +37,7 @@ export function FAB(props: FABProps) {
 const styles = StyleSheet.create({
   button: {
     position: 'absolute',
-    bottom: 64,
+    bottom: 0,
     right: 0,
   },
   icon: {

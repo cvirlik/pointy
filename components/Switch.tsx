@@ -1,4 +1,9 @@
-import Animated, { interpolateColor, useAnimatedStyle, withTiming } from 'react-native-reanimated';
+import Animated, {
+  Easing,
+  interpolateColor,
+  useAnimatedStyle,
+  withTiming,
+} from 'react-native-reanimated';
 import { View, StyleSheet, Pressable } from 'react-native';
 import React from 'react';
 import * as Haptics from 'expo-haptics';
@@ -27,11 +32,19 @@ export const Switch: React.FC<SwitchProps> = ({ isSelect, onSelect }) => {
     );
 
     return {
-      backgroundColor: withTiming(backgroundColor, { duration: 300 }),
+      backgroundColor: withTiming(backgroundColor, { duration: 150 }),
     };
   }, [enabled]);
 
-  const rStyle = useAnimatedStyle(() => ({ left: withTiming(enabled ? 27 : 3) }), [enabled]);
+  const rStyle = useAnimatedStyle(
+    () => ({
+      left: withTiming(enabled ? 27 : 3, {
+        duration: 150,
+        easing: Easing.linear,
+      }),
+    }),
+    [enabled],
+  );
 
   return (
     <Pressable onPress={handlePress}>

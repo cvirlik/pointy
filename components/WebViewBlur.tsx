@@ -3,16 +3,16 @@ import { StyleSheet, View } from 'react-native';
 import React from 'react';
 
 import type { ViewProps } from './Themed';
+import { SplashScreen } from 'expo-router';
 
 export function WebViewBlur(props: ViewProps & { intensity: number; index?: number }) {
   const { intensity, children, style, index, ...rest } = props;
-
-  console.log('Rendering web view');
 
   return (
     <View style={[styles.view, style, { zIndex: index }]} {...rest}>
       {children}
       <WebView
+        onLoad={() => SplashScreen.hideAsync()}
         style={styles.webView}
         source={{
           html: `

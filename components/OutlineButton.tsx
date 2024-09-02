@@ -11,6 +11,7 @@ type OutlineButtonProps = {
   onPress?: () => void;
   withoutOutline?: boolean;
   fontSize?: number;
+  filled?: boolean;
 };
 
 export function OutlineButton(props: OutlineButtonProps) {
@@ -26,7 +27,11 @@ export function OutlineButton(props: OutlineButtonProps) {
           style={[
             styles.container,
             {
-              backgroundColor: pressed ? props.colorFill : 'transparent',
+              backgroundColor: props.filled
+                ? props.colorFill
+                : pressed
+                  ? props.colorFill
+                  : 'transparent',
               borderColor: props.color,
               borderWidth: props.withoutOutline ? 0 : 1,
             },
@@ -46,6 +51,7 @@ const styles = StyleSheet.create({
   text: {
     fontFamily: 'Regular',
     fontSize: 18,
+    lineHeight: 32,
   },
   container: {
     flexDirection: 'row',
