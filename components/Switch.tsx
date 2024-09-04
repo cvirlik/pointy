@@ -4,9 +4,13 @@ import Animated, {
   useAnimatedStyle,
   withTiming,
 } from 'react-native-reanimated';
-import { View, StyleSheet, Pressable } from 'react-native';
+import { StyleSheet, Pressable } from 'react-native';
 import React from 'react';
 import * as Haptics from 'expo-haptics';
+
+import { View } from './Themed';
+
+import { useTheme } from '@/providers/ThemeProvider';
 
 interface SwitchProps {
   isSelect: boolean;
@@ -15,20 +19,21 @@ interface SwitchProps {
 
 export const Switch: React.FC<SwitchProps> = ({ isSelect, onSelect }) => {
   const [enabled, setEnabled] = React.useState(isSelect);
+  const theme = useTheme().theme;
 
   const handlePress = () => {
     setEnabled(current => {
       if (!current) void Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Soft);
+      onSelect?.(!current);
       return !current;
     });
-    onSelect?.(enabled);
   };
 
   const animatedContainerStyle = useAnimatedStyle(() => {
     const backgroundColor = interpolateColor(
       enabled ? 1 : 0, // interpolating value
       [0, 1], // input range
-      ['#c7c7c7', '#72B8EB'], // output colors
+      [theme.disabled, theme.tertiary], // output colors
     );
 
     return {

@@ -1,24 +1,24 @@
+import { Dimensions, TouchableOpacity } from 'react-native';
 import React from 'react';
 import { Tabs } from 'expo-router';
+import type { BottomTabBarProps } from '@react-navigation/bottom-tabs';
 import Ionicons from '@expo/vector-icons/Ionicons';
-import { BottomTabBarProps } from '@react-navigation/bottom-tabs';
 
+import { useTheme } from '@/providers/ThemeProvider';
 import Colors from '@/constants/Colors';
-import { useColorScheme } from '@/components/useColorScheme';
 import { useClientOnlyValue } from '@/components/useClientOnlyValue';
-import { Text } from '@/components/Themed';
-import { Dimensions, TouchableOpacity, View } from 'react-native';
+import { Text, View } from '@/components/Themed';
 
 export const TabBar = ({ descriptors, navigation }: BottomTabBarProps) => {
   const { width } = Dimensions.get('window');
 
   return (
     <View
+      type="foreground"
       style={{
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: 'white',
         elevation: 11,
         padding: 6,
         borderRadius: 16,
@@ -78,13 +78,13 @@ export const TabBar = ({ descriptors, navigation }: BottomTabBarProps) => {
 };
 
 export default function TabLayout() {
-  const colorScheme = useColorScheme();
+  const theme = useTheme().theme;
 
   return (
     <Tabs
       tabBar={TabBar}
       screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
+        tabBarActiveTintColor: theme.secondary,
         headerShown: useClientOnlyValue(false, true),
       }}
     >

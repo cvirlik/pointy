@@ -1,26 +1,43 @@
-import { Dimensions, Pressable, StatusBar, StyleSheet, View } from 'react-native';
+import { Dimensions, Pressable, StatusBar, StyleSheet } from 'react-native';
 import React from 'react';
 import { Image } from 'expo-image';
 import * as Haptics from 'expo-haptics';
 import { Ionicons } from '@expo/vector-icons';
 
-import { Text } from '@/components/Themed';
+import { useVibration } from '@/providers/VibrationProvider';
+import { useTheme } from '@/providers/ThemeProvider';
+import { darkTheme, lightTheme, monochromeTheme } from '@/constants/Themes';
+import type { Theme } from '@/constants/Themes';
+import { Text, View } from '@/components/Themed';
 import { Switch } from '@/components/Switch';
 import { PageContainer } from '@/components/PageContainer';
-import { Avatar } from '@/components/Avatar';
 import { OutlineButton } from '@/components/OutlineButton';
+import { Avatar } from '@/components/Avatar';
 
 export default function Tab() {
   const [selectedIndex, setSelectedIndex] = React.useState(0);
+  const curentTheme = useTheme().theme;
+  const setTheme = useTheme().setTheme;
+  const vibration = useVibration();
   const width = (Dimensions.get('window').width - 16 * 2 - 16 * 2) / 3;
   const themes = [
-    require('../../assets/images/Light.svg'),
-    require('../../assets/images/Dark.svg'),
-    require('../../assets/images/Monochrome.svg'),
+    {
+      theme: lightTheme,
+      image: require('../../assets/images/Light.svg'),
+    },
+    {
+      theme: darkTheme,
+      image: require('../../assets/images/Dark.svg'),
+    },
+    {
+      theme: monochromeTheme,
+      image: require('../../assets/images/Monochrome.svg'),
+    },
   ];
-  const handlePress = (index: number) => {
+  const handlePress = (index: number, theme: Theme) => {
     setSelectedIndex(index);
-    void Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Soft);
+    setTheme(theme);
+    if (vibration.isVibrationEnabled) void Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Soft);
   };
   return (
     <PageContainer>
@@ -44,7 +61,7 @@ export default function Tab() {
       <View style={styles.containerThemes}>
         <Text style={styles.textLabel}>Style Settings</Text>
         <View style={styles.imageContainer}>
-          {themes.map((theme, index) => (
+          {themes.map(({ theme, image }, index) => (
             <Pressable
               key={index}
               style={[
@@ -52,20 +69,20 @@ export default function Tab() {
                   width,
                   borderRadius: 6,
                   elevation: 5,
-                  shadowColor: 'rgba(20, 19, 21, 0.6)',
+                  shadowColor: curentTheme.shadow,
                   justifyContent: 'center',
                   alignContent: 'center',
                   position: 'relative',
                 },
               ]}
-              onPress={() => handlePress(index)}
+              onPress={() => handlePress(index, theme)}
             >
-              <Image style={styles.image} source={theme} />
+              <Image style={styles.image} source={image} />
               {index === selectedIndex && (
                 <Ionicons
                   name="checkmark-circle"
                   size={24}
-                  color={'#72B8EB'}
+                  color={curentTheme.tertiary}
                   style={{ position: 'absolute', right: 4, bottom: 4 }}
                 />
               )}
@@ -74,14 +91,17 @@ export default function Tab() {
         </View>
         <View style={styles.rowText}>
           <Text style={styles.goalText}>Enable vibrations</Text>
-          <Switch isSelect={true} onSelect={() => {}}></Switch>
+          <Switch
+            isSelect={vibration.isVibrationEnabled}
+            onSelect={vibration.setVibration}
+          ></Switch>
         </View>
       </View>
       <OutlineButton
         text="Log Out"
-        color="#D92871"
-        colorFill="rgba(217, 40, 114, 0.1)"
-        icon={<Ionicons name="log-out-outline" size={24} color="#D92871" />}
+        color={curentTheme.secondary}
+        colorFill={curentTheme.secondaryOpacity}
+        icon={<Ionicons name="log-out-outline" size={24} color={curentTheme.secondary} />}
       />
     </PageContainer>
   );

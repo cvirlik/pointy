@@ -1,46 +1,35 @@
-/**
- * Learn more about Light and Dark modes:
- * https://docs.expo.io/guides/color-schemes/
- */
-
 import { Text as DefaultText, View as DefaultView } from 'react-native';
 
-import { useColorScheme } from './useColorScheme';
+import { useTheme } from '@/providers/ThemeProvider';
 
-import Colors from '@/constants/Colors';
-
-type ThemeProps = {
-  lightColor?: string;
-  darkColor?: string;
+export type TextProps = DefaultText['props'];
+export type ViewProps = DefaultView['props'] & {
+  type?: 'foreground' | 'background';
 };
 
-export type TextProps = ThemeProps & DefaultText['props'];
-export type ViewProps = ThemeProps & DefaultView['props'];
-
-export function useThemeColor(
-  props: { light?: string; dark?: string },
-  colorName: keyof typeof Colors.light & keyof typeof Colors.dark,
-) {
-  const theme = useColorScheme() ?? 'light';
-  const colorFromProps = props[theme];
-
-  if (colorFromProps) {
-    return colorFromProps;
-  } else {
-    return Colors[theme][colorName];
-  }
-}
-
 export function Text(props: TextProps) {
-  const { style, lightColor, darkColor, ...otherProps } = props;
-  //const color = useThemeColor({ light: lightColor, dark: darkColor }, 'text');
+  const { style, ...otherProps } = props;
+  const theme = useTheme().theme;
 
-  return <DefaultText style={[{ fontFamily: 'Regular', fontSize: 18 }, style]} {...otherProps} />;
+  return (
+    <DefaultText
+      style={[{ fontFamily: 'Regular', fontSize: 18, color: theme.text }, style]}
+      {...otherProps}
+    />
+  );
 }
 
 export function View(props: ViewProps) {
-  const { style, lightColor, darkColor, ...otherProps } = props;
-  const backgroundColor = useThemeColor({ light: lightColor, dark: darkColor }, 'background');
+  const { style, type = 'background', ...otherProps } = props;
+  const theme = useTheme().theme;
 
-  return <DefaultView style={[{ backgroundColor }, style]} {...otherProps} />;
+  return (
+    <DefaultView
+      style={[
+        { backgroundColor: type === 'background' ? theme.background : theme.foreground },
+        style,
+      ]}
+      {...otherProps}
+    />
+  );
 }

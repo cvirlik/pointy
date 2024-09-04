@@ -2,10 +2,11 @@ import { useEffect } from 'react';
 import * as SplashScreen from 'expo-splash-screen';
 import { Stack } from 'expo-router';
 import { useFonts } from 'expo-font';
-import { DefaultTheme, ThemeProvider } from '@react-navigation/native';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import 'react-native-reanimated';
 
+import VibrationProvider from '@/providers/VibrationProvider';
+import ThemeProvider from '@/providers/ThemeProvider';
 import { WebViewBlur } from '@/components/WebViewBlur';
 import { RandomCircles } from '@/components/Circle';
 
@@ -46,25 +47,17 @@ export default function RootLayout() {
 }
 
 function RootLayoutNav() {
-  //   const colorScheme = useColorScheme();
-  const MyTheme = {
-    ...DefaultTheme,
-    colors: {
-      ...DefaultTheme.colors,
-      background: 'rgba(242, 242, 242, 0)',
-    },
-  };
-
   return (
-    // <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-    <ThemeProvider value={MyTheme}>
-      <WebViewBlur intensity={120}>
-        <RandomCircles />
-      </WebViewBlur>
-      <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="modal" options={{ presentation: 'modal' }} />
-      </Stack>
+    <ThemeProvider>
+      <VibrationProvider>
+        <WebViewBlur intensity={120}>
+          <RandomCircles />
+        </WebViewBlur>
+        <Stack>
+          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
+          <Stack.Screen name="modal" options={{ presentation: 'modal' }} />
+        </Stack>
+      </VibrationProvider>
     </ThemeProvider>
   );
 }

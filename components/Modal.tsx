@@ -1,5 +1,7 @@
-import { StyleSheet, Text, TouchableOpacity, View, Modal } from 'react-native';
+import { StyleSheet, Modal } from 'react-native';
 import React from 'react';
+
+import { View } from './Themed';
 
 type ModalWindowProps = {
   openModal: boolean;
@@ -11,12 +13,7 @@ export function ModalWindow(props: ModalWindowProps) {
   const { openModal, setOpenModal } = props;
   return (
     <View style={styles.container}>
-      <Modal
-        visible={openModal}
-        statusBarTranslucent={true}
-        transparent={true}
-        animationType="fade"
-      >
+      <Modal visible={openModal} statusBarTranslucent transparent animationType="fade">
         {props.children}
       </Modal>
     </View>

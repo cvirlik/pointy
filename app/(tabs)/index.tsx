@@ -1,26 +1,30 @@
+import { StyleSheet } from 'react-native';
 import React from 'react';
 import * as Haptics from 'expo-haptics';
+import { Ionicons } from '@expo/vector-icons';
 
+import { useVibration } from '@/providers/VibrationProvider';
+import { useTheme } from '@/providers/ThemeProvider';
+import { TransactionTypeList } from '@/components/TransactionTypeList';
 import { TransactionList } from '@/components/TransactionList';
+import { Text, View } from '@/components/Themed';
+import { Tabs } from '@/components/Tabs';
 import { PageHeader } from '@/components/PageHeader';
 import { PageContainer } from '@/components/PageContainer';
+import { OutlineButton } from '@/components/OutlineButton';
 import { ModalWindow } from '@/components/Modal';
 import { FAB } from '@/components/FAB';
 import { BalanceCard } from '@/components/BalanceCard';
-import { StyleSheet, View, ViewBase } from 'react-native';
-import { Text } from '@/components/Themed';
-import { Tabs } from '@/components/Tabs';
-import { TransactionTypeList } from '@/components/TransactionTypeList';
-import { OutlineButton } from '@/components/OutlineButton';
-import { Ionicons } from '@expo/vector-icons';
 
 export default function Tab() {
   const [openModal, setOpenModal] = React.useState(false);
   const [openCreateModal, setOpenCreateModal] = React.useState(false);
+  const theme = useTheme().theme;
+  const vibration = useVibration();
 
   const onFABPress = () => {
     setOpenModal(true);
-    void Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Soft);
+    if (vibration.isVibrationEnabled) void Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Soft);
   };
 
   return (
@@ -31,8 +35,8 @@ export default function Tab() {
         <TransactionList />
       </PageContainer>
       <ModalWindow openModal={openModal} setOpenModal={setOpenModal}>
-        <View style={styles.content}>
-          <View style={styles.card}>
+        <View style={[styles.content, { backgroundColor: theme.modal }]}>
+          <View type="foreground" style={styles.card}>
             <Text style={styles.title}>Choose Transaction</Text>
             <Tabs options={['Work', 'Shopping', 'Activity', 'Cleaning', 'Poop']} />
             <TransactionTypeList />
@@ -52,8 +56,8 @@ export default function Tab() {
                 setOpenModal(false);
               }}
               text="Close"
-              color="#ccc"
-              colorFill="rgba(204, 204, 204, 0.1)"
+              color={theme.disabled}
+              colorFill={theme.disabledOpacity}
               withoutOutline
               fontSize={16}
             />
@@ -61,8 +65,8 @@ export default function Tab() {
         </View>
       </ModalWindow>
       <ModalWindow openModal={openCreateModal} setOpenModal={setOpenCreateModal}>
-        <View style={styles.content}>
-          <View style={styles.card}>
+        <View style={[styles.content, { backgroundColor: theme.modal }]}>
+          <View type="foreground" style={styles.card}>
             <Text style={styles.title}>Create New Transaction</Text>
             <View style={styles.textWrapper}>
               <View style={styles.textContainer}>
@@ -81,15 +85,15 @@ export default function Tab() {
               <View style={styles.priceContainer}>
                 <View style={styles.price}>
                   <Text style={styles.mainText}>Calculated price:</Text>
-                  <Text style={[styles.mainText, styles.pricePositive]}>+ 30✦</Text>
+                  <Text style={[styles.mainText, { color: theme.secondary }]}>+ 30✦</Text>
                 </View>
               </View>
             </View>
             <OutlineButton
               text="Apply"
-              color="#D92871"
-              colorFill="rgba(217, 40, 114, 0.1)"
-              icon={<Ionicons name="checkmark" size={24} color="#D92871" />}
+              color={theme.secondary}
+              colorFill={theme.secondaryOpacity}
+              icon={<Ionicons name="checkmark" size={24} color={theme.secondary} />}
               fontSize={16}
               onPress={() => {
                 setOpenCreateModal(false);
@@ -102,8 +106,8 @@ export default function Tab() {
                 setOpenModal(true);
               }}
               text="Cancel"
-              color="#ccc"
-              colorFill="rgba(204, 204, 204, 0.1)"
+              color={theme.disabled}
+              colorFill={theme.disabledOpacity}
               withoutOutline
               fontSize={16}
             />
@@ -123,7 +127,6 @@ const styles = StyleSheet.create({
   card: {
     width: '100%',
     padding: 32,
-    backgroundColor: 'white',
     borderRadius: 32,
     gap: 10,
     alignItems: 'center',
@@ -133,7 +136,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     padding: 32,
-    backgroundColor: 'rgba(65, 94, 167, 0.48)',
   },
   textContainer: {
     flexDirection: 'row',
@@ -158,11 +160,5 @@ const styles = StyleSheet.create({
   textWrapper: {
     gap: 4,
     marginVertical: 8,
-  },
-  pricePositive: {
-    color: '#D92871',
-  },
-  priceNegative: {
-    color: '#415EA7',
   },
 });

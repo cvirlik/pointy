@@ -1,11 +1,15 @@
 import { BarChart } from 'react-native-gifted-charts';
 import type { barDataItem } from 'react-native-gifted-charts';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet } from 'react-native';
 import React from 'react';
 
+import { Text, View } from './Themed';
 import { Card } from './Card';
 
+import { useTheme } from '@/providers/ThemeProvider';
+
 export const WeekGraph = () => {
+  const theme = useTheme().theme;
   const barData = [
     { value: 250, label: 'M' },
     { value: 500, label: 'T' },
@@ -53,11 +57,10 @@ export const WeekGraph = () => {
           <BarChart
             data={barData.map((item, index) => ({
               ...item,
-              frontColor: index === selectedBarIndex ? '#415EA7' : '#D92871',
+              frontColor: index === selectedBarIndex ? theme.primary : theme.secondary,
               topLabelComponent: () => (
                 <Text
                   style={{
-                    color: '#000000',
                     fontFamily: 'Light',
                     fontSize: 16,
                     lineHeight: 24,
@@ -83,8 +86,8 @@ export const WeekGraph = () => {
             yAxisExtraHeight={16}
             xAxisLabelsHeight={22}
             xAxisLabelsVerticalShift={0}
-            xAxisLabelTextStyle={{ color: '#000000', fontFamily: 'Regular', fontSize: 16 }}
-            yAxisTextStyle={{ color: '#000000', fontFamily: 'Light' }}
+            xAxisLabelTextStyle={{ color: theme.text, fontFamily: 'Regular', fontSize: 16 }}
+            yAxisTextStyle={{ color: theme.text, fontFamily: 'Light' }}
             isAnimated
             animationDuration={300}
             onPress={(_barDataItem: barDataItem, index: number) => {
@@ -100,11 +103,11 @@ export const WeekGraph = () => {
           <View>
             <View style={styles.descriptionContainer}>
               <Text style={styles.description}>Income:</Text>
-              <Text style={styles.income}>+ 150 ✦</Text>
+              <Text style={[{ color: theme.secondary }, styles.numbers]}>+ 150 ✦</Text>
             </View>
             <View style={styles.descriptionContainer}>
               <Text style={styles.description}>Expenses:</Text>
-              <Text style={styles.expenses}> - 150 ✦</Text>
+              <Text style={[{ color: theme.primary }, styles.numbers]}> - 150 ✦</Text>
             </View>
           </View>
         </View>
@@ -134,14 +137,8 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontFamily: 'Regular',
   },
-  income: {
+  numbers: {
     fontSize: 24,
     fontFamily: 'Medium',
-    color: '#D92871',
-  },
-  expenses: {
-    fontSize: 24,
-    fontFamily: 'Medium',
-    color: '#415EA7',
   },
 });

@@ -1,6 +1,10 @@
 import Animated, { useAnimatedStyle, withTiming } from 'react-native-reanimated';
-import { Text, TouchableOpacity, StyleSheet, ScrollView, View } from 'react-native';
+import { Text, TouchableOpacity, StyleSheet, ScrollView } from 'react-native';
 import React from 'react';
+
+import { View } from './Themed';
+
+import { useTheme } from '@/providers/ThemeProvider';
 
 interface TabsProps {
   options: string[];
@@ -8,6 +12,7 @@ interface TabsProps {
 }
 
 export const Tabs: React.FC<TabsProps> = ({ options, onSelect }) => {
+  const theme = useTheme().theme;
   const [selectedIndex, setSelectedIndex] = React.useState(0);
   const [optionWidths, setOptionWidths] = React.useState<Record<string, number>>({});
 
@@ -37,14 +42,20 @@ export const Tabs: React.FC<TabsProps> = ({ options, onSelect }) => {
   const rStyle = useAnimatedStyle(() => ({ left: withTiming(scrollWidth) }), [scrollWidth]);
 
   return (
-    <View style={styles.container}>
+    <View type="foreground" style={[styles.container, { shadowColor: theme.shadow }]}>
       <ScrollView
         horizontal
         overScrollMode="never"
         showsHorizontalScrollIndicator={false}
         style={styles.scroll}
       >
-        <Animated.View style={[{ width: currentWidth }, styles.selected, rStyle]} />
+        <Animated.View
+          style={[
+            { width: currentWidth, backgroundColor: theme.tertiary },
+            styles.selected,
+            rStyle,
+          ]}
+        />
         {options.map((option, index) => (
           <TouchableOpacity
             onLayout={event => {
@@ -58,7 +69,12 @@ export const Tabs: React.FC<TabsProps> = ({ options, onSelect }) => {
             style={[styles.button]}
             onPress={() => handlePress(index)}
           >
-            <Text style={[styles.text, index === selectedIndex ? styles.selectedText : null]}>
+            <Text
+              style={[
+                styles.text,
+                { color: index === selectedIndex ? theme.selectedText : theme.text },
+              ]}
+            >
               {option}
             </Text>
           </TouchableOpacity>
@@ -70,7 +86,6 @@ export const Tabs: React.FC<TabsProps> = ({ options, onSelect }) => {
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#ffffff',
     borderRadius: 16,
     elevation: 5,
     overflow: 'hidden',
@@ -85,7 +100,6 @@ const styles = StyleSheet.create({
     backgroundColor: 'transparent',
   },
   selected: {
-    backgroundColor: '#72B8EB',
     borderRadius: 16,
     position: 'absolute',
     elevation: 5,
@@ -95,9 +109,5 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontFamily: 'Medium',
     lineHeight: 32,
-  },
-  selectedText: {
-    color: '#ffffff',
-    fontSize: 16,
   },
 });

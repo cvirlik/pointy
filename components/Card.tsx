@@ -1,12 +1,21 @@
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet } from 'react-native';
+
+import { View } from './Themed';
+
+import { useTheme } from '@/providers/ThemeProvider';
 
 type CardProps = React.ComponentProps<typeof View> & {
   children?: React.ReactNode;
 };
 
 export function Card(props: CardProps) {
+  const theme = useTheme().theme;
   return (
-    <View {...props} style={[styles.card, props.style]}>
+    <View
+      type="foreground"
+      {...props}
+      style={[styles.card, props.style, { shadowColor: theme.shadow }]}
+    >
       {props.children}
     </View>
   );
@@ -14,11 +23,9 @@ export function Card(props: CardProps) {
 
 const styles = StyleSheet.create({
   card: {
-    backgroundColor: 'white',
     width: '100%',
     borderRadius: 16,
     justifyContent: 'center',
-    shadowColor: 'rgba(20, 19, 21, 0.6)',
     elevation: 5,
   },
 });

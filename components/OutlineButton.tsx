@@ -1,7 +1,8 @@
-import { Pressable, StyleSheet, View } from 'react-native';
+import { Pressable, StyleSheet } from 'react-native';
 import * as Haptics from 'expo-haptics';
 
-import { Text } from '@/components/Themed';
+import { useVibration } from '@/providers/VibrationProvider';
+import { Text, View } from '@/components/Themed';
 
 type OutlineButtonProps = {
   text: string;
@@ -15,10 +16,12 @@ type OutlineButtonProps = {
 };
 
 export function OutlineButton(props: OutlineButtonProps) {
+  const vibration = useVibration();
   return (
     <Pressable
       onPress={() => {
-        Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Soft);
+        if (vibration.isVibrationEnabled)
+          void Haptics.impactAsync(Haptics.ImpactFeedbackStyle.Soft);
         props.onPress?.();
       }}
     >

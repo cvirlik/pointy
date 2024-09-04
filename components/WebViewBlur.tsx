@@ -1,15 +1,15 @@
 import { WebView } from 'react-native-webview';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet } from 'react-native';
 import React from 'react';
-
-import type { ViewProps } from './Themed';
 import { SplashScreen } from 'expo-router';
+
+import { View, type ViewProps } from './Themed';
 
 export function WebViewBlur(props: ViewProps & { intensity: number; index?: number }) {
   const { intensity, children, style, index, ...rest } = props;
 
   return (
-    <View style={[styles.view, style, { zIndex: index }]} {...rest}>
+    <View type="foreground" style={[styles.view, style, { zIndex: index }]} {...rest}>
       {children}
       <WebView
         onLoad={() => SplashScreen.hideAsync()}

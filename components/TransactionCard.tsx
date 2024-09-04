@@ -1,7 +1,9 @@
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet } from 'react-native';
 
-import { Text } from './Themed';
+import { Text, View } from './Themed';
 import { Card } from './Card';
+
+import { useTheme } from '@/providers/ThemeProvider';
 
 type TransactionCardProps = {
   price: number;
@@ -11,12 +13,13 @@ type TransactionCardProps = {
 };
 
 export function TransactionCard(props: TransactionCardProps) {
+  const theme = useTheme().theme;
   return (
     <Card style={styles.cardContainer}>
       <View style={styles.container}>
         <View>
           <Text
-            style={[styles.mainText, props.positive ? styles.pricePositive : styles.priceNegative]}
+            style={[styles.mainText, { color: props.positive ? theme.secondary : theme.primary }]}
           >
             {props.positive ? '+' : '-'} {props.price} ✦
           </Text>
@@ -43,12 +46,6 @@ const styles = StyleSheet.create({
   mainText: {
     fontSize: 24,
     fontFamily: 'Regular',
-  },
-  pricePositive: {
-    color: '#D92871',
-  },
-  priceNegative: {
-    color: '#415EA7',
   },
   description: {
     fontSize: 16,

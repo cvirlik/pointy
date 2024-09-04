@@ -1,18 +1,21 @@
 import { Svg, Defs, Stop, Rect, RadialGradient } from 'react-native-svg';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet } from 'react-native';
 import { Image } from 'expo-image';
 
-import { Text } from './Themed';
+import { Text, View } from './Themed';
 import { Card } from './Card';
 
+import { useTheme } from '@/providers/ThemeProvider';
+
 export function BalanceCard() {
+  const theme = useTheme().theme;
   return (
     <Card style={styles.cardContainer}>
       <Svg style={StyleSheet.absoluteFillObject}>
         <Defs>
           <RadialGradient id="grad" fx="100" fy="75" gradientUnits="userSpaceOnUse">
-            <Stop offset="0" stopColor="#FFC9E0" stopOpacity="1" />
-            <Stop offset="1" stopColor="#ffffff" stopOpacity="1" />
+            <Stop offset="0" stopColor={theme.effectFrom} stopOpacity="1" />
+            <Stop offset="1" stopColor={theme.foreground} stopOpacity="1" />
           </RadialGradient>
         </Defs>
         <Rect width="100%" height="100%" fill="url(#grad)" rx={16} />

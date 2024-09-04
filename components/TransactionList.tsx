@@ -1,7 +1,7 @@
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet } from 'react-native';
 
 import { TransactionCard } from './TransactionCard';
-import { Text } from './Themed';
+import { Text, View } from './Themed';
 
 const testList = [
   {

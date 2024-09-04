@@ -1,16 +1,27 @@
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet } from 'react-native';
+
+import { View } from './Themed';
+
+import { useTheme } from '@/providers/ThemeProvider';
 
 type AvatarProps = {
   size: number;
 };
 
 export function Avatar(props: AvatarProps) {
-  return <View style={[styles.image, { width: props.size, height: props.size }]} />;
+  const theme = useTheme().theme;
+  return (
+    <View
+      style={[
+        styles.image,
+        { width: props.size, height: props.size, backgroundColor: theme.primary },
+      ]}
+    />
+  );
 }
 
 const styles = StyleSheet.create({
   image: {
-    backgroundColor: '#415EA7',
     borderRadius: 1000,
   },
 });

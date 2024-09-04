@@ -6,8 +6,12 @@ import Animated, {
   withSequence,
   Easing,
 } from 'react-native-reanimated';
-import { StyleSheet, useWindowDimensions, View } from 'react-native';
+import { StyleSheet, useWindowDimensions } from 'react-native';
 import { useMemo } from 'react';
+
+import { View } from './Themed';
+
+import { useTheme } from '@/providers/ThemeProvider';
 
 export type CircleProps = {
   color: string;
@@ -74,6 +78,7 @@ function randomNumber(min: number, max: number) {
 
 export const RandomCircles: React.FC = () => {
   const { width, height } = useWindowDimensions();
+  const theme = useTheme().theme;
 
   const circles = useMemo(() => {
     const rand = randomNumber(4, 6) / 10;
@@ -83,9 +88,9 @@ export const RandomCircles: React.FC = () => {
       x: randomNumber(0, width),
       y: randomNumber(0, height),
       radius,
-      color: '#72B8EB',
+      color: theme.backgroundEffect,
     }));
-  }, [height, width]);
+  }, [height, theme.backgroundEffect, width]);
 
   return (
     <>
