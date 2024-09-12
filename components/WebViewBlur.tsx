@@ -8,6 +8,11 @@ import { View, type ViewProps } from './Themed';
 export function WebViewBlur(props: ViewProps & { intensity: number; index?: number }) {
   const { intensity, children, style, index, ...rest } = props;
 
+  // onload
+  // profile
+
+  // hide
+
   return (
     <View type="foreground" style={[styles.view, style, { zIndex: index }]} {...rest}>
       {children}

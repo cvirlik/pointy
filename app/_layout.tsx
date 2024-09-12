@@ -7,6 +7,7 @@ import 'react-native-reanimated';
 
 import VibrationProvider from '@/providers/VibrationProvider';
 import ThemeProvider from '@/providers/ThemeProvider';
+import { ProfileProvider } from '@/providers/ProfileProvider';
 import { WebViewBlur } from '@/components/WebViewBlur';
 import { RandomCircles } from '@/components/Circle';
 
@@ -48,16 +49,29 @@ export default function RootLayout() {
 
 function RootLayoutNav() {
   return (
-    <ThemeProvider>
-      <VibrationProvider>
-        <WebViewBlur intensity={120}>
-          <RandomCircles />
-        </WebViewBlur>
-        <Stack>
-          <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-          <Stack.Screen name="modal" options={{ presentation: 'modal' }} />
-        </Stack>
-      </VibrationProvider>
-    </ThemeProvider>
+    <ProfileProvider>
+      <ThemeProvider>
+        <VibrationProvider>
+          <WebViewBlur intensity={120}>
+            <RandomCircles />
+          </WebViewBlur>
+          <Stack>
+            <Stack.Screen
+              name="(tabs)"
+              options={{
+                headerShown: false,
+              }}
+            />
+            <Stack.Screen
+              name="sign-in"
+              options={{
+                presentation: 'modal',
+                headerShown: false,
+              }}
+            />
+          </Stack>
+        </VibrationProvider>
+      </ThemeProvider>
+    </ProfileProvider>
   );
 }

@@ -1,10 +1,11 @@
 import { Dimensions, TouchableOpacity } from 'react-native';
 import React from 'react';
-import { Tabs } from 'expo-router';
+import { Redirect, Tabs } from 'expo-router';
 import type { BottomTabBarProps } from '@react-navigation/bottom-tabs';
 import Ionicons from '@expo/vector-icons/Ionicons';
 
 import { useTheme } from '@/providers/ThemeProvider';
+import { useProfile } from '@/providers/ProfileProvider';
 import Colors from '@/constants/Colors';
 import { useClientOnlyValue } from '@/components/useClientOnlyValue';
 import { Text, View } from '@/components/Themed';
@@ -21,7 +22,8 @@ export const TabBar = ({ descriptors, navigation }: BottomTabBarProps) => {
         alignItems: 'center',
         elevation: 11,
         padding: 6,
-        borderRadius: 16,
+        borderTopLeftRadius: 16,
+        borderTopRightRadius: 16,
       }}
     >
       {Object.entries(descriptors).map(([_, descriptor]) => {
@@ -78,14 +80,20 @@ export const TabBar = ({ descriptors, navigation }: BottomTabBarProps) => {
 };
 
 export default function TabLayout() {
-  const theme = useTheme().theme;
+  const { theme } = useTheme();
+  const { profile } = useProfile();
+  const headerShown = useClientOnlyValue(false, true);
+
+  if (!profile) {
+    return <Redirect href="/sign-in" />;
+  }
 
   return (
     <Tabs
       tabBar={TabBar}
       screenOptions={{
         tabBarActiveTintColor: theme.secondary,
-        headerShown: useClientOnlyValue(false, true),
+        headerShown,
       }}
     >
       <Tabs.Screen
