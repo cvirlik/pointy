@@ -1,6 +1,7 @@
 import * as React from 'react';
 
-import { lightTheme } from '@/constants/Themes';
+import { getTheme, saveTheme } from '@/services/storage';
+import { darkTheme, lightTheme, monochromeTheme } from '@/constants/Themes';
 import type { Theme } from '@/constants/Themes';
 
 type ThemeContextType = {
@@ -16,8 +17,35 @@ const ThemeContext = React.createContext<ThemeContextType | undefined>(undefined
 
 export default function ThemeProvider({ children }: Props) {
   const [theme, setTheme] = React.useState<Theme>(lightTheme);
+  React.useEffect(() => {
+    void (async () => {
+      const storedTheme = await getTheme();
+      if (storedTheme === 'darkTheme') {
+        setTheme(darkTheme);
+      } else if (storedTheme === 'monochromeTheme') {
+        setTheme(monochromeTheme);
+      } else if (storedTheme === 'lightTheme') {
+        setTheme(lightTheme);
+      }
+    })();
+  }, []);
 
-  return <ThemeContext.Provider value={{ theme, setTheme }}>{children}</ThemeContext.Provider>;
+  const updateTheme = async (newTheme: Theme) => {
+    setTheme(newTheme);
+    const themeKey =
+      newTheme === darkTheme
+        ? 'darkTheme'
+        : newTheme === monochromeTheme
+          ? 'monochromeTheme'
+          : 'lightTheme';
+    await saveTheme(themeKey);
+  };
+
+  return (
+    <ThemeContext.Provider value={{ theme, setTheme: updateTheme }}>
+      {children}
+    </ThemeContext.Provider>
+  );
 }
 
 export function useTheme() {

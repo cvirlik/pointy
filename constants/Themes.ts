@@ -4,7 +4,8 @@ export const lightTheme = {
 
   text: '#000',
   selectedText: '#fff',
-  disabled: '#ccc',
+  disabled: '#7d7d7d',
+  disabledTab: '#ccc',
   disabledOpacity: 'rgba(204, 204, 204, 0.1)',
   shadow: 'rgba(20, 19, 21, 0.6)',
 
@@ -26,7 +27,8 @@ export const darkTheme = {
 
   text: '#fff',
   selectedText: '#000',
-  disabled: '#30313f',
+  disabled: '#464768',
+  disabledTab: '#464768',
   disabledOpacity: 'rgba(41, 37, 66, 0.1)',
 
   shadow: 'rgba(114, 184, 235, 0.6)',
@@ -36,8 +38,8 @@ export const darkTheme = {
   modal: 'rgba(26, 67, 133, 0.48)',
   secondary: '#dc136c',
   secondaryOpacity: 'rgba(220, 19, 108 0.1)',
-  tertiary: 'rgb(46, 94, 170)',
-  backgroundEffect: 'rgb(46, 94, 170)',
+  tertiary: '#2e5eaa',
+  backgroundEffect: '#1d3d8c',
   tertiaryOpacity: 'rgba(114, 184, 235, 0.1)',
   effectFrom: '#EA638C',
   effectTo: '#e05981',
@@ -50,6 +52,7 @@ export const monochromeTheme = {
   text: '#fff',
   selectedText: '#000',
   disabled: '#30313f',
+  disabledTab: '#30313f',
   disabledOpacity: 'rgba(41, 37, 66, 0.1)',
 
   shadow: 'rgba(0, 0, 0, 1)',
