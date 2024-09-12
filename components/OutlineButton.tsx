@@ -53,7 +53,6 @@ export function OutlineButton(props: OutlineButtonProps) {
 const styles = StyleSheet.create({
   text: {
     fontFamily: 'Regular',
-    fontSize: 18,
     lineHeight: 32,
   },
   container: {

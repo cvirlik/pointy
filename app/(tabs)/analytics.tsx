@@ -64,42 +64,38 @@ export default function Tab() {
         />
       </PageContainer>
       <ModalWindow openModal={openModal} setOpenModal={setOpenModal}>
-        <View style={[styles.content, { backgroundColor: theme.modal }]}>
-          <View type="foreground" style={styles.card}>
-            <Text style={styles.title}>Overview</Text>
-            <SegmentedButton pagePadding={32 * 3 + 16 * 2} options={['Income', 'Expenses']} />
-            <View style={styles.container}>
-              {testList.map((item, index) =>
-                index !== testList.length - 1 ? (
-                  <TransactionType
-                    key={index}
-                    price={item.price}
-                    positive={item.positive}
-                    title={item.title}
-                    last
-                  />
-                ) : (
-                  <TransactionType
-                    key={index}
-                    price={item.price}
-                    positive={item.positive}
-                    title={item.title}
-                  />
-                ),
-              )}
-            </View>
-            <OutlineButton
-              onPress={() => {
-                setOpenModal(false);
-              }}
-              text="Cancel"
-              color={theme.disabled}
-              colorFill={theme.disabledOpacity}
-              withoutOutline
-              fontSize={16}
-            />
-          </View>
+        <Text style={styles.title}>Overview</Text>
+        <SegmentedButton pagePadding={32 * 3 + 16 * 2} options={['Income', 'Expenses']} />
+        <View style={styles.container}>
+          {testList.map((item, index) =>
+            index !== testList.length - 1 ? (
+              <TransactionType
+                key={index}
+                price={item.price}
+                positive={item.positive}
+                title={item.title}
+                last
+              />
+            ) : (
+              <TransactionType
+                key={index}
+                price={item.price}
+                positive={item.positive}
+                title={item.title}
+              />
+            ),
+          )}
         </View>
+        <OutlineButton
+          onPress={() => {
+            setOpenModal(false);
+          }}
+          text="Cancel"
+          color={theme.disabled}
+          colorFill={theme.disabledOpacity}
+          withoutOutline
+          fontSize={16}
+        />
       </ModalWindow>
     </>
   );

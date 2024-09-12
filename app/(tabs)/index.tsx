@@ -35,84 +35,76 @@ export default function Tab() {
         <TransactionList />
       </PageContainer>
       <ModalWindow openModal={openModal} setOpenModal={setOpenModal}>
-        <View style={[styles.content, { backgroundColor: theme.modal }]}>
-          <View type="foreground" style={styles.card}>
-            <Text style={styles.title}>Choose Transaction</Text>
-            <Tabs options={['Work', 'Shopping', 'Activity', 'Cleaning', 'Poop']} />
-            <TransactionTypeList />
-            <OutlineButton
-              text="Create New Transaction"
-              color="#415EA7"
-              colorFill="rgba(65, 94, 167, 0.1)"
-              icon={<Ionicons name="pencil" size={24} color="#415EA7" />}
-              fontSize={16}
-              onPress={() => {
-                setOpenModal(false);
-                setOpenCreateModal(true);
-              }}
-            />
-            <OutlineButton
-              onPress={() => {
-                setOpenModal(false);
-              }}
-              text="Close"
-              color={theme.disabled}
-              colorFill={theme.disabledOpacity}
-              withoutOutline
-              fontSize={16}
-            />
-          </View>
-        </View>
+        <Text style={styles.title}>Choose Transaction</Text>
+        <Tabs options={['Work', 'Shopping', 'Activity', 'Cleaning', 'Poop']} />
+        <TransactionTypeList />
+        <OutlineButton
+          text="Create New Transaction"
+          color={theme.primary}
+          colorFill={theme.primaryOpacity}
+          icon={<Ionicons name="pencil" size={24} color={theme.primary} />}
+          fontSize={16}
+          onPress={() => {
+            setOpenModal(false);
+            setOpenCreateModal(true);
+          }}
+        />
+        <OutlineButton
+          onPress={() => {
+            setOpenModal(false);
+          }}
+          text="Close"
+          color={theme.disabled}
+          colorFill={theme.disabledOpacity}
+          withoutOutline
+          fontSize={16}
+        />
       </ModalWindow>
       <ModalWindow openModal={openCreateModal} setOpenModal={setOpenCreateModal}>
-        <View style={[styles.content, { backgroundColor: theme.modal }]}>
-          <View type="foreground" style={styles.card}>
-            <Text style={styles.title}>Create New Transaction</Text>
-            <View style={styles.textWrapper}>
-              <View style={styles.textContainer}>
-                <Text style={styles.mainText}>Name</Text>
-                <Text style={styles.mainText}>Do stuff</Text>
-              </View>
-              <View style={styles.textContainer}>
-                <Text style={styles.mainText}>Category</Text>
-                <Text style={styles.mainText}>Work</Text>
-              </View>
-              <View style={styles.textContainer}>
-                <Text style={styles.mainText}>Approximate Time</Text>
-                <Text style={styles.mainText}>1 hr</Text>
-              </View>
+        <Text style={styles.title}>Create New Transaction</Text>
+        <View style={styles.textWrapper}>
+          <View style={styles.textContainer}>
+            <Text style={styles.mainText}>Name</Text>
+            <Text style={styles.mainText}>Do stuff</Text>
+          </View>
+          <View style={styles.textContainer}>
+            <Text style={styles.mainText}>Category</Text>
+            <Text style={styles.mainText}>Work</Text>
+          </View>
+          <View style={styles.textContainer}>
+            <Text style={styles.mainText}>Approximate Time</Text>
+            <Text style={styles.mainText}>1 hr</Text>
+          </View>
 
-              <View style={styles.priceContainer}>
-                <View style={styles.price}>
-                  <Text style={styles.mainText}>Calculated price:</Text>
-                  <Text style={[styles.mainText, { color: theme.secondary }]}>+ 30✦</Text>
-                </View>
-              </View>
+          <View style={styles.priceContainer}>
+            <View style={styles.price}>
+              <Text style={styles.mainText}>Calculated price:</Text>
+              <Text style={[styles.mainText, { color: theme.secondary }]}>+ 30✦</Text>
             </View>
-            <OutlineButton
-              text="Apply"
-              color={theme.secondary}
-              colorFill={theme.secondaryOpacity}
-              icon={<Ionicons name="checkmark" size={24} color={theme.secondary} />}
-              fontSize={16}
-              onPress={() => {
-                setOpenCreateModal(false);
-                setOpenModal(true);
-              }}
-            />
-            <OutlineButton
-              onPress={() => {
-                setOpenCreateModal(false);
-                setOpenModal(true);
-              }}
-              text="Cancel"
-              color={theme.disabled}
-              colorFill={theme.disabledOpacity}
-              withoutOutline
-              fontSize={16}
-            />
           </View>
         </View>
+        <OutlineButton
+          text="Apply"
+          color={theme.secondary}
+          colorFill={theme.secondaryOpacity}
+          icon={<Ionicons name="checkmark" size={24} color={theme.secondary} />}
+          fontSize={16}
+          onPress={() => {
+            setOpenCreateModal(false);
+            setOpenModal(true);
+          }}
+        />
+        <OutlineButton
+          onPress={() => {
+            setOpenCreateModal(false);
+            setOpenModal(true);
+          }}
+          text="Cancel"
+          color={theme.disabled}
+          colorFill={theme.disabledOpacity}
+          withoutOutline
+          fontSize={16}
+        />
       </ModalWindow>
       <FAB onPress={onFABPress} />
     </>
@@ -123,19 +115,6 @@ const styles = StyleSheet.create({
   title: {
     fontFamily: 'SemiBold',
     fontSize: 20,
-  },
-  card: {
-    width: '100%',
-    padding: 32,
-    borderRadius: 32,
-    gap: 10,
-    alignItems: 'center',
-  },
-  content: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    padding: 32,
   },
   textContainer: {
     flexDirection: 'row',

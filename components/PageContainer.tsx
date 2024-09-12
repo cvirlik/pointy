@@ -1,6 +1,6 @@
-import { ScrollView, StyleSheet, View } from 'react-native';
+import { ScrollView, StyleSheet } from 'react-native';
 
-import type { ViewProps } from './Themed';
+import { View, type ViewProps } from './Themed';
 
 export function PageContainer(props: ViewProps) {
   return (
@@ -8,7 +8,7 @@ export function PageContainer(props: ViewProps) {
       <ScrollView
         overScrollMode="never"
         showsVerticalScrollIndicator={false}
-        contentContainerStyle={styles.scrollContainer}
+        contentContainerStyle={[styles.scrollContainer, props.style]}
       >
         {props.children}
       </ScrollView>

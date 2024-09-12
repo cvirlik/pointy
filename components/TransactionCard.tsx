@@ -36,7 +36,6 @@ export function TransactionCard(props: TransactionCardProps) {
 const styles = StyleSheet.create({
   cardContainer: {
     position: 'relative',
-    padding: 16,
   },
   container: {
     flexDirection: 'row',

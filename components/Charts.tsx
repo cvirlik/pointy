@@ -119,7 +119,6 @@ export const WeekGraph = () => {
 const styles = StyleSheet.create({
   cardContainer: {
     position: 'relative',
-    padding: 16,
   },
   container: {
     gap: 8,

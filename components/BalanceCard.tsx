@@ -37,8 +37,6 @@ const styles = StyleSheet.create({
   cardContainer: {
     position: 'relative',
     aspectRatio: '85.60 / 53.98',
-    paddingHorizontal: 16,
-    paddingVertical: 16,
   },
   imageContainer: {
     top: 32,
