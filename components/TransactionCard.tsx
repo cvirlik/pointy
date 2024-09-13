@@ -21,7 +21,7 @@ export function TransactionCard(props: TransactionCardProps) {
           <Text
             style={[styles.mainText, { color: props.positive ? theme.secondary : theme.primary }]}
           >
-            {props.positive ? '+' : '-'} {props.price} ✦
+            {props.positive ? '+' : ''} {props.price} ✦
           </Text>
         </View>
         <View>

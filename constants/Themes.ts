@@ -19,6 +19,12 @@ export const lightTheme = {
   tertiaryOpacity: 'rgba(114, 184, 235, 0.1)',
   effectFrom: '#FFCAE0',
   effectTo: '#f6bad5',
+
+  svgLeft: '#80BEEC',
+  svgRight: '#FFCAE0',
+  svgMix: '#8097CF',
+
+  error: '#D92871',
 };
 
 export const darkTheme = {
@@ -43,6 +49,12 @@ export const darkTheme = {
   tertiaryOpacity: 'rgba(114, 184, 235, 0.1)',
   effectFrom: '#EA638C',
   effectTo: '#e05981',
+
+  svgLeft: '#2E5EAA',
+  svgRight: '#EA638C',
+  svgMix: '#EA63AA',
+
+  error: '#dc136c',
 };
 
 export const monochromeTheme = {
@@ -67,6 +79,12 @@ export const monochromeTheme = {
   tertiaryOpacity: 'rgba(114, 184, 235, 0.1)',
   effectFrom: '#EA638C',
   effectTo: '#e05981',
+
+  svgLeft: '#2E5EAA',
+  svgRight: '#EA638C',
+  svgMix: '#EA63AA',
+
+  error: '#dc136c',
 };
 
 export type Theme = typeof lightTheme & typeof darkTheme & typeof monochromeTheme;

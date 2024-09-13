@@ -1,59 +1,30 @@
 import { StyleSheet } from 'react-native';
+import React from 'react';
 
 import { TransactionCard } from './TransactionCard';
 import { Text, View } from './Themed';
 
-const testList = [
-  {
-    price: 15,
-    positive: false,
-    title: 'Bought energy drink',
-    description: 'Drink in moderation',
-  },
-  {
-    price: 15,
-    positive: true,
-    title: 'Work 1 hr',
-    description: 'Pupipu',
-  },
-  {
-    price: 15,
-    positive: false,
-    title: 'Bought energy drink',
-    description: 'Drink in moderation',
-  },
-  {
-    price: 15,
-    positive: false,
-    title: 'Bought energy drink',
-    description: 'Drink in moderation',
-  },
-  {
-    price: 15,
-    positive: false,
-    title: 'Bought energy drink',
-    description: 'Drink in moderation',
-  },
-  {
-    price: 15,
-    positive: false,
-    title: 'Bought energy drink',
-    description: 'Drink in moderation',
-  },
-];
+import { formatDate } from '@/services/formats';
+import { useProfile } from '@/providers/ProfileProvider';
 
 export function TransactionList() {
+  const { transactions } = useProfile();
   return (
     <View style={styles.container}>
       <Text style={styles.text}>Transaction History</Text>
-      {testList.map((item, index) => (
-        <TransactionCard
-          key={index}
-          price={item.price}
-          positive={item.positive}
-          title={item.title}
-          description={item.description}
-        />
+      {transactions?.map((item, index) => (
+        <React.Fragment key={`group-${index}`}>
+          <Text style={styles.textDate}>{formatDate(new Date(item.date))}</Text>
+          {item.transactions.map((transaction, elementIndex) => (
+            <TransactionCard
+              key={`item-${elementIndex}`}
+              price={transaction.price}
+              positive={transaction.price >= 0}
+              title={transaction.title}
+              description={transaction.description}
+            />
+          ))}
+        </React.Fragment>
       ))}
     </View>
   );
@@ -63,6 +34,10 @@ const styles = StyleSheet.create({
   text: {
     fontFamily: 'SemiBold',
     fontSize: 24,
+  },
+  textDate: {
+    fontFamily: 'Regular',
+    fontSize: 20,
   },
   container: {
     width: '100%',
