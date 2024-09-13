@@ -1,5 +1,4 @@
-import { Defs, RadialGradient, Rect, Stop, Svg } from 'react-native-svg';
-import { StyleSheet, TextInput } from 'react-native';
+import { StyleSheet } from 'react-native';
 import React from 'react';
 import { Redirect } from 'expo-router';
 import { Ionicons } from '@expo/vector-icons';
@@ -9,7 +8,10 @@ import { useTheme } from '@/providers/ThemeProvider';
 import { useProfile } from '@/providers/ProfileProvider';
 import { useFetch } from '@/hooks/fetch';
 import { ENDPOINT } from '@/constants/Requests';
+import { Toast } from '@/components/Toast';
 import { Text, View } from '@/components/Themed';
+import { RichTextInput } from '@/components/RichTextInput';
+import { RadialGradientEffect } from '@/components/RadialGradientEffect';
 import { PageContainer } from '@/components/PageContainer';
 import { OutlineButton } from '@/components/OutlineButton';
 import { Card } from '@/components/Card';
@@ -23,43 +25,26 @@ function LogInCard(props: { onSignUp: () => void }) {
   const [password, setPassword] = React.useState('');
   return (
     <Card style={{ alignItems: 'center', justifyContent: 'center', position: 'relative' }}>
-      <Svg style={[{ position: 'absolute' }]}>
-        <Defs>
-          <RadialGradient
-            id="grad"
-            cx="50%"
-            cy="50%"
-            rx="50%"
-            ry="50%"
-            fx="50%"
-            fy="50%"
-            gradientUnits="userSpaceOnUse"
-          >
-            <Stop offset="0" stopColor={theme.effectFrom} stopOpacity="1" />
-            <Stop offset="1" stopColor={theme.foreground} stopOpacity="1" />
-          </RadialGradient>
-        </Defs>
-        <Rect width="100%" height="100%" fill="url(#grad)" rx={16} />
-      </Svg>
+      <RadialGradientEffect cx="50%" cy="50%" rx="50%" ry="50%" fx="50%" fy="50%" />
       <View style={{ width: '100%', gap: 16, justifyContent: 'center', alignItems: 'center' }}>
         <Text style={styles.title}>Log In</Text>
         <View style={{ width: '100%', gap: 8, justifyContent: 'center', alignItems: 'center' }}>
-          <TextInput
-            style={[styles.input, { borderColor: theme.primary, color: theme.text }]}
+          <RichTextInput
             placeholder="Email"
             placeholderTextColor={theme.text}
             onChangeText={setEmail}
             autoComplete="email"
             value={email}
+            kind="email"
           />
-          <TextInput
-            style={[styles.input, { borderColor: theme.primary, color: theme.text }]}
+          <RichTextInput
             placeholder="Password"
             placeholderTextColor={theme.text}
             onChangeText={setPassword}
             autoComplete="current-password"
             secureTextEntry
             value={password}
+            kind="password"
           />
         </View>
         <View style={{ width: '100%', gap: 8, justifyContent: 'center', alignItems: 'center' }}>
@@ -80,6 +65,7 @@ function LogInCard(props: { onSignUp: () => void }) {
                 },
                 onError: code => {
                   console.log('Error logging in', code);
+                  Toast('Profile not found or invalid credentials');
                 },
               });
             }}
@@ -106,62 +92,36 @@ function SingUpCard(props: { onLogIn: () => void }) {
   const [password, setPassword] = React.useState('');
   return (
     <Card style={{ alignItems: 'center', justifyContent: 'center', position: 'relative' }}>
-      <Svg style={{ position: 'absolute' }}>
-        <Defs>
-          <RadialGradient
-            id="grad"
-            cx="50%"
-            cy="50%"
-            rx="50%"
-            ry="40%"
-            fx="100%"
-            fy="100%"
-            gradientUnits="userSpaceOnUse"
-          >
-            <Stop offset="0" stopColor={theme.effectFrom} stopOpacity="1" />
-            <Stop offset="1" stopColor={theme.foreground} stopOpacity="1" />
-          </RadialGradient>
-        </Defs>
-        <Rect width="100%" height="100%" fill="url(#grad)" rx={16} />
-      </Svg>
+      <RadialGradientEffect cx="50%" cy="50%" rx="50%" ry="40%" fx="100%" fy="100%" />
       <View style={{ width: '100%', gap: 16, justifyContent: 'center', alignItems: 'center' }}>
         <Text style={styles.title}>Sign Up</Text>
         <View style={{ width: '100%', gap: 8, justifyContent: 'center', alignItems: 'center' }}>
           <Avatar size={86} />
-          <TextInput
-            style={[
-              styles.input,
-              {
-                borderColor: theme.primary,
-                color: theme.text,
-                borderBottomWidth: 1,
-                borderWidth: 0,
-                borderRadius: 0,
-                width: 'auto',
-              },
-            ]}
+          <RichTextInput
+            variant="transparent"
             placeholder="Nickname"
             placeholderTextColor={theme.text}
             onChangeText={setName}
             autoComplete="nickname"
             value={name}
+            kind="not-nullable"
           />
-          <TextInput
-            style={[styles.input, { borderColor: theme.primary, color: theme.text }]}
+          <RichTextInput
             placeholder="Email"
             onChangeText={setEmail}
             placeholderTextColor={theme.text}
             autoComplete="email"
             value={email}
+            kind="email"
           />
-          <TextInput
-            style={[styles.input, { borderColor: theme.primary, color: theme.text }]}
+          <RichTextInput
             placeholder="Password"
             placeholderTextColor={theme.text}
             onChangeText={setPassword}
             autoComplete="current-password"
             secureTextEntry
             value={password}
+            kind="password"
           />
         </View>
         <View style={{ width: '100%', gap: 8, justifyContent: 'center', alignItems: 'center' }}>
@@ -182,6 +142,7 @@ function SingUpCard(props: { onLogIn: () => void }) {
                 },
                 onError: code => {
                   console.log('Error sign up', code);
+                  Toast('Error sign up');
                 },
               });
             }}
@@ -220,13 +181,6 @@ export default function ModalScreen() {
 }
 
 const styles = StyleSheet.create({
-  input: {
-    height: 40,
-    borderWidth: 1,
-    padding: 10,
-    borderRadius: 8,
-    width: '100%',
-  },
   container: {
     alignItems: 'center',
     justifyContent: 'center',

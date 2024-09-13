@@ -9,6 +9,7 @@ export function PageContainer(props: ViewProps) {
         overScrollMode="never"
         showsVerticalScrollIndicator={false}
         contentContainerStyle={[styles.scrollContainer, props.style]}
+        keyboardShouldPersistTaps="handled"
       >
         {props.children}
       </ScrollView>

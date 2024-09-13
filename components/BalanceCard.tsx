@@ -1,32 +1,26 @@
-import { Svg, Defs, Stop, Rect, RadialGradient } from 'react-native-svg';
 import { StyleSheet } from 'react-native';
-import { Image } from 'expo-image';
 
 import { Text, View } from './Themed';
+import { RadialGradientEffect } from './RadialGradientEffect';
+import { MasterCat } from './MasterCat';
 import { Card } from './Card';
 
-import { useTheme } from '@/providers/ThemeProvider';
+import { useProfile } from '@/providers/ProfileProvider';
 
 export function BalanceCard() {
-  const theme = useTheme().theme;
+  const profile = useProfile();
   return (
     <Card style={styles.cardContainer}>
-      <Svg style={StyleSheet.absoluteFillObject}>
-        <Defs>
-          <RadialGradient id="grad" fx="100" fy="75" gradientUnits="userSpaceOnUse">
-            <Stop offset="0" stopColor={theme.effectFrom} stopOpacity="1" />
-            <Stop offset="1" stopColor={theme.foreground} stopOpacity="1" />
-          </RadialGradient>
-        </Defs>
-        <Rect width="100%" height="100%" fill="url(#grad)" rx={16} />
-      </Svg>
+      <RadialGradientEffect fx="100" fy="75" />
       <View style={styles.imageContainer}>
-        <Image style={styles.image} source={require('../assets/images/mastercat.svg')} />
+        <MasterCat />
       </View>
       <View>
         <Text style={styles.mainText}>your current balance</Text>
         <Text style={styles.balanceText}>✦ 150</Text>
-        <Text style={styles.mainText}>0000 **** **** 0000</Text>
+        <Text style={styles.mainText}>
+          {profile.profile?.cardNumber.toString().replace(/(\d{4})(?=\d)/g, '$1  ')}
+        </Text>
       </View>
       <Text style={styles.description}>your actual goal is 1500 ✦</Text>
     </Card>

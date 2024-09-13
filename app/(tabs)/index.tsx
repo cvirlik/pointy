@@ -7,6 +7,7 @@ import { useVibration } from '@/providers/VibrationProvider';
 import { useTheme } from '@/providers/ThemeProvider';
 import { TransactionTypeList } from '@/components/TransactionTypeList';
 import { TransactionList } from '@/components/TransactionList';
+import { Toast } from '@/components/Toast';
 import { Text, View } from '@/components/Themed';
 import { Tabs } from '@/components/Tabs';
 import { PageHeader } from '@/components/PageHeader';
@@ -92,6 +93,7 @@ export default function Tab() {
           onPress={() => {
             setOpenCreateModal(false);
             setOpenModal(true);
+            Toast('Transaction created successfully');
           }}
         />
         <OutlineButton
